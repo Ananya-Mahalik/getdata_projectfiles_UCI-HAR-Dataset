@@ -1,0 +1,70 @@
+---
+title: "CodeBook"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## R Markdown
+
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+
+The run_analysis.R script performs the following:
+
+Download the dataset
+Dataset downloaded and extracted under the folder UCI HAR Dataset
+
+Assign each data to variables
+features <- features.txt : 561 rows, 2 columns
+
+activities <- activity_labels.txt : 6 rows, 2 columns
+List of activities performed when the corresponding measurements were taken and its codes (labels)
+subject_test <- test/subject_test.txt : 2947 rows, 1 column
+x_test <- test/X_test.txt : 2947 rows, 561 columns
+y_test <- test/y_test.txt : 2947 rows, 1 columns
+subject_train <- test/subject_train.txt : 7352 rows, 1 column
+x_train <- test/X_train.txt : 7352 rows, 561 columns
+y_train <- test/y_train.txt : 7352 rows, 1 columns
+
+
+1. Merges the training and the test sets to create one data set
+X (10299 rows, 561 columns) is created by merging x_train and x_test using rbind() function
+Y (10299 rows, 1 column) is created by merging y_train and y_test using rbind() function
+subject (10299 rows, 1 column) is created by merging subject_train and subject_test using rbind() function
+merged (10299 rows, 563 column) is created by merging subject, Y and X using cbind() function
+
+2. Extracts only the measurements on the mean and standard deviation for each measurement
+tidy (10299 rows, 88 columns) is created by subsetting merged, selecting only few columns
+
+3. Uses descriptive activity names to name the activities in the data set
+Entire numbers in code column of the TidyData replaced with corresponding activity taken from second column of the activities variable
+
+4. Appropriately labels the data set with descriptive variable names
+code column in TidyData renamed into activities
+All Acc in column’s name replaced by Accelerometer
+All Gyro in column’s name replaced by Gyroscope
+All BodyBody in column’s name replaced by Body
+All Mag in column’s name replaced by Magnitude
+All start with character f in column’s name replaced by Frequency
+All start with character t in column’s name replaced by Time
+
+5. From the data set in step 4, creates a second, independent tidy data set with the average of each variable for each activity and each subject
+FinalData (180 rows, 88 columns) is created by sumarizing TidyData taking the means of each variable for each activity and each subject, after groupped by subject and activity.
+Export FinalData into FinalData.txt file
+```{r cars}
+summary(cars)
+```
+
+## Including Plots
+
+You can also embed plots, for example:
+
+```{r pressure, echo=FALSE}
+plot(pressure)
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
